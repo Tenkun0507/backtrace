@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 360">
+  <defs>
+    <linearGradient id="glass" x1="0" x2="1">
+      <stop offset="0" stop-color="#d5eef2" stop-opacity="0.56"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#b6d7dd" stop-opacity="0.52"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" x2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.72"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <path d="M42 48 H318 L216 214 H144 Z" fill="url(#glass)" stroke="#4c686b" stroke-width="6" stroke-linejoin="round"/>
+  <line x1="180" y1="214" x2="180" y2="308" stroke="#4c686b" stroke-width="8" stroke-linecap="round"/>
+  <ellipse cx="180" cy="323" rx="64" ry="13" fill="none" stroke="#4c686b" stroke-width="6"/>
+  <ellipse cx="180" cy="48" rx="136" ry="12" fill="#f3feff" fill-opacity="0.82" stroke="#4c686b" stroke-width="5"/>
+  <path d="M108 74 L87 140" stroke="url(#shine)" stroke-width="12" stroke-linecap="round"/>
+</svg>

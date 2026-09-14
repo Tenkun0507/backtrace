@@ -1,102 +1,143 @@
 <!doctype html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
-  <meta name="theme-color" content="#05080d" />
-  <title>BACKTRACE</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+  <meta name="theme-color" content="#76cbd2" />
+  <title>THE COFFEE MILK</title>
+  <link rel="stylesheet" href="style.css?v=20260914-r12" />
 </head>
 <body>
-  <main class="app">
-    <div class="scanlines" aria-hidden="true"></div>
-    <div class="vignette" aria-hidden="true"></div>
+  <div id="app" class="app">
+    <div class="kitchen-bg" aria-hidden="true">
+      <div class="window"><div class="sky"></div><div class="sea"></div><div class="palm palm-a"></div><div class="palm palm-b"></div></div>
+      <div class="tiles"></div>
+      <div class="shelf shelf-a"><i></i><i></i><i></i></div>
+      <div class="shelf shelf-b"><i></i><i></i></div>
+      <div class="counter"></div>
+    </div>
 
-    <section class="panel">
-      <header class="hud">
-        <div class="brand">
-          <p class="eyebrow">MEMORY TRACE // NODE-02 <span id="versionTag">v16</span></p>
-          <h1>BACKTRACE</h1>
+    <section id="titleScreen" class="screen title-screen active" aria-label="Title screen">
+      <div class="corner-controls title-controls">
+        <button id="titleLangBtn" class="small-btn lang-btn">日本語</button>
+      </div>
+      <div class="title-panel">
+        <div class="brand-kicker" data-i18n="brandKicker">PERFECT MIXING GAME</div>
+        <h1>THE<br><span>COFFEE MILK</span></h1>
+        <p class="title-copy" data-i18n="titleCopy">Match the color. Fill it to the edge. Do not spill.</p>
+
+        <div class="rule-grid">
+          <article class="rule-card">
+            <div class="rule-emoji" aria-hidden="true">1️⃣</div>
+            <b data-i18n="ruleOneTitle">ONE USE</b><span data-i18n="ruleOneDesc">Each pour button can be used once.</span>
+          </article>
+          <article class="rule-card">
+            <div class="rule-emoji" aria-hidden="true">🎨</div>
+            <b data-i18n="ruleColorTitle">COLOR</b><span data-i18n="ruleColorDesc">Match the target color as closely as possible.</span>
+          </article>
+          <article class="rule-card">
+            <div class="rule-emoji" aria-hidden="true">🥤</div>
+            <b data-i18n="ruleVolumeTitle">VOLUME</b><span data-i18n="ruleVolumeDesc">The closer to full, the higher the score.</span>
+          </article>
+          <article class="rule-card">
+            <div class="rule-emoji" aria-hidden="true">💦</div>
+            <b data-i18n="ruleOverflowTitle">OVERFLOW</b><span data-i18n="ruleOverflowDesc">Spill even a little and the round is worth zero.</span>
+          </article>
         </div>
-        <div class="hud-stats">
-          <div class="stat timer-stat">
-            <span class="label">TIME</span>
-            <strong id="timer">3.00</strong>
-          </div>
-          <div class="stat">
-            <span class="label">SCORE</span>
-            <strong id="score">000</strong>
-          </div>
-          <button id="soundBtn" class="icon-btn" aria-label="サウンド切り替え">♪</button>
+
+        <button id="startBtn" class="primary-btn" data-i18n="start">START</button>
+      </div>
+    </section>
+
+    <section id="gameScreen" class="screen game-screen" aria-label="Game">
+      <div class="corner-controls">
+        <button id="titleBtn" class="small-btn" data-i18n="titleBtn">TITLE</button>
+        <button id="soundBtn" class="small-btn" aria-pressed="true">SOUND ON</button>
+        <button id="langBtn" class="small-btn lang-btn">日本語</button>
+      </div>
+
+      <header class="hud">
+        <div class="hud-card target-card">
+          <div class="hud-title" data-i18n="target">TARGET</div>
+          <div class="target-frame"><div id="targetSwatch" class="target-swatch"></div></div>
+        </div>
+        <div class="hud-card round-card">
+          <div id="roundLabel" class="round-label">ROUND 1 / 5</div>
+        </div>
+        <div class="hud-card score-card">
+          <div class="score-label" data-i18n="totalScoreLabel">TOTAL SCORE</div>
+          <div id="totalScore" class="total-score">0</div>
         </div>
       </header>
 
+      <main class="playfield">
+        <button id="coffeeBtn" class="pour-btn coffee-btn" data-liquid="coffee">
+          <span class="pour-icon coffee-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" role="img">
+              <path d="M47.8 8.8C35.4 2.9 18.6 9.2 11.2 22.4 3.7 35.8 8.2 50.5 21.4 56.1 34.7 61.8 50.8 54.3 56 40.4c4.9-13.1 3.8-25.9-8.2-31.6Z"/>
+              <path class="bean-cut" d="M44.2 11.8c-1.9 9.7-7.9 13.7-13.8 17.7-6.7 4.5-13.2 8.9-14.3 21.8"/>
+            </svg>
+          </span>
+          <strong data-i18n="coffee">COFFEE</strong>
+          <small data-i18n="oneUseSmall">1 USE</small>
+        </button>
 
-
-      <section class="game-area">
-        <div class="status-wrap">
-          <div id="status" class="status">SYSTEM READY</div>
-          <div id="subStatus" class="sub-status">2個前に光った場所を追跡せよ</div>
+        <div id="vesselArea" class="vessel-area">
+          <div id="pourStream" class="pour-stream"></div>
+          <div id="vesselCanvas" class="vessel-canvas">
+            <div id="liquidMask" class="liquid-mask">
+              <div id="liquid" class="liquid"><div class="liquid-surface"></div></div>
+            </div>
+            <img id="vesselArt" class="vessel-art" src="assets/beaker_game.svg" alt="" draggable="false" />
+          </div>
         </div>
 
-        <div class="board-wrap">
-          <div id="board" class="board" role="grid" aria-label="5×5のゲーム盤面"></div>
-          <div id="signalNoise" class="signal-noise" aria-hidden="true"></div>
-          <div id="boardPulse" class="board-pulse" aria-hidden="true"></div>
-        </div>
+        <button id="milkBtn" class="pour-btn milk-btn" data-liquid="milk">
+          <span class="pour-icon milk-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" role="img">
+              <path d="M18 7h25l7 10v40H14V17l4-10Z"/>
+              <path class="milk-fold" d="M18 7l10 10h22M28 17v40M43 7l-7 10"/>
+              <path class="milk-drop" d="M39 31c0 5-7 9-7 14a7 7 0 0 0 14 0c0-5-7-9-7-14Z"/>
+            </svg>
+          </span>
+          <strong data-i18n="milk">MILK</strong>
+          <small data-i18n="oneUseSmall">1 USE</small>
+        </button>
+      </main>
 
-        <div class="progress-row">
-          <span>TRACE BUFFER</span>
-          <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
-          <span id="bufferText">0 / 2</span>
+      <div id="resultOverlay" class="overlay" aria-hidden="true">
+        <div class="result-card">
+          <div id="resultEyebrow" class="result-eyebrow">ROUND 1</div>
+          <h2 id="resultTitle">RESULT</h2>
+          <div class="result-metrics">
+            <div><span data-i18n="color">COLOR</span><b id="colorScore">0</b></div>
+            <div><span data-i18n="volume">VOLUME</span><b id="volumeScore">0</b></div>
+          </div>
+          <div class="round-score-label" data-i18n="roundScoreLabel">ROUND SCORE</div>
+          <div id="roundScore" class="round-score">0</div>
+          <p id="resultNote" class="result-note"></p>
+          <button id="nextBtn" class="primary-btn result-next">NEXT ROUND</button>
         </div>
-
-        <div class="mode-select">
-          <button id="mode2Btn" class="mode-btn selected" type="button">
-            <span>STANDARD</span>
-            <strong>2-BACK</strong>
-          </button>
-          <button id="mode3Btn" class="mode-btn locked" type="button" disabled>
-            <span id="mode3Label">LOCKED // SCORE 30</span>
-            <strong>3-BACK</strong>
-          </button>
-        </div>
-
-        <button id="startBtn" class="primary-btn">INITIALIZE</button>
-        <button id="retryBtn" class="primary-btn hidden">RETRY</button>
-        <button id="titleBtn" class="secondary-btn hidden">RETURN TO TITLE</button>
-      </section>
+      </div>
     </section>
 
-    <div id="countdownOverlay" class="overlay hidden" aria-live="polite">
-      <div id="countdownText" class="countdown-text">3</div>
-    </div>
-
-    <div id="gameOverOverlay" class="overlay hidden">
-      <div class="gameover-card">
-        <p class="error-label">ERROR // MEMORY LOST</p>
-        <h2>TRACE FAILED</h2>
-        <div class="result-grid">
-          <div><span>SCORE</span><strong id="finalScore">000</strong></div>
-          <div><span>BEST</span><strong id="bestScore">000</strong></div>
-        </div>
-        <p id="gameOverReason" class="reason">WRONG NODE</p>
-        <button id="overlayRetryBtn" class="primary-btn">RETRY</button>
-        <button id="overlayTitleBtn" class="secondary-btn">RETURN TO TITLE</button>
+    <section id="finalScreen" class="screen final-screen" aria-label="Final result">
+      <div class="corner-controls">
+        <button id="finalTitleBtn" class="small-btn" data-i18n="titleBtn">TITLE</button>
+        <button id="finalSoundBtn" class="small-btn">SOUND ON</button>
+        <button id="finalLangBtn" class="small-btn lang-btn">日本語</button>
       </div>
-    </div>
-
-    <div id="unlockOverlay" class="overlay hidden">
-      <div class="unlock-card">
-        <p class="unlock-kicker">ACCESS GRANTED</p>
-        <h2>3-BACK</h2>
-        <p class="unlock-sub">HARD PROTOCOL UNLOCKED</p>
-        <button id="unlockContinueBtn" class="primary-btn">CONTINUE</button>
+      <div class="final-card">
+        <div class="brand-kicker" data-i18n="finalKicker">5 ROUNDS COMPLETE</div>
+        <h2>THE COFFEE MILK</h2>
+        <div class="final-score-label" data-i18n="finalScoreLabel">FINAL SCORE</div>
+        <div id="finalScore" class="final-score">0</div>
+        <div id="roundBreakdown" class="round-breakdown"></div>
+        <button id="againBtn" class="primary-btn" data-i18n="playAgain">PLAY AGAIN</button>
       </div>
-    </div>
+    </section>
+  </div>
 
-
-  </main>
-  <script src="app.js"></script>
+  <script src="script.js?v=20260914-r12"></script>
 </body>
 </html>

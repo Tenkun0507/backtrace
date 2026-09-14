@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 390">
+  <defs>
+    <linearGradient id="glass" x1="0" x2="1">
+      <stop offset="0" stop-color="#d6eef2" stop-opacity="0.56"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#b9dbe0" stop-opacity="0.52"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" x2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <path d="M34 28 H86 q6 0 6 6 V338 q0 19 -19 19 H47 q-19 0 -19 -19 V34 q0 -6 6 -6 z" fill="url(#glass)" stroke="#4b686a" stroke-width="5"/>
+  <ellipse cx="60" cy="28" rx="33" ry="11" fill="#f3feff" fill-opacity="0.82" stroke="#4b686a" stroke-width="5"/>
+  <ellipse cx="60" cy="357" rx="20" ry="7" fill="#698588" fill-opacity="0.2"/>
+  <rect x="46" y="52" width="8" height="252" rx="4" fill="url(#shine)"/>
+</svg>
