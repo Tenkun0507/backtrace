@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#05080d" />
+  <title>BACKTRACE</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+
+    <section class="panel">
+      <header class="hud">
+        <div class="brand">
+          <p class="eyebrow">MEMORY TRACE // NODE-02 <span id="versionTag">v16</span></p>
+          <h1>BACKTRACE</h1>
+        </div>
+        <div class="hud-stats">
+          <div class="stat timer-stat">
+            <span class="label">TIME</span>
+            <strong id="timer">3.00</strong>
+          </div>
+          <div class="stat">
+            <span class="label">SCORE</span>
+            <strong id="score">000</strong>
+          </div>
+          <button id="soundBtn" class="icon-btn" aria-label="サウンド切り替え">♪</button>
+        </div>
+      </header>
+
+
+
+      <section class="game-area">
+        <div class="status-wrap">
+          <div id="status" class="status">SYSTEM READY</div>
+          <div id="subStatus" class="sub-status">2個前に光った場所を追跡せよ</div>
+        </div>
+
+        <div class="board-wrap">
+          <div id="board" class="board" role="grid" aria-label="5×5のゲーム盤面"></div>
+          <div id="signalNoise" class="signal-noise" aria-hidden="true"></div>
+          <div id="boardPulse" class="board-pulse" aria-hidden="true"></div>
+        </div>
+
+        <div class="progress-row">
+          <span>TRACE BUFFER</span>
+          <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+          <span id="bufferText">0 / 2</span>
+        </div>
+
+        <div class="mode-select">
+          <button id="mode2Btn" class="mode-btn selected" type="button">
+            <span>STANDARD</span>
+            <strong>2-BACK</strong>
+          </button>
+          <button id="mode3Btn" class="mode-btn locked" type="button" disabled>
+            <span id="mode3Label">LOCKED // SCORE 30</span>
+            <strong>3-BACK</strong>
+          </button>
+        </div>
+
+        <button id="startBtn" class="primary-btn">INITIALIZE</button>
+        <button id="retryBtn" class="primary-btn hidden">RETRY</button>
+        <button id="titleBtn" class="secondary-btn hidden">RETURN TO TITLE</button>
+      </section>
+    </section>
+
+    <div id="countdownOverlay" class="overlay hidden" aria-live="polite">
+      <div id="countdownText" class="countdown-text">3</div>
+    </div>
+
+    <div id="gameOverOverlay" class="overlay hidden">
+      <div class="gameover-card">
+        <p class="error-label">ERROR // MEMORY LOST</p>
+        <h2>TRACE FAILED</h2>
+        <div class="result-grid">
+          <div><span>SCORE</span><strong id="finalScore">000</strong></div>
+          <div><span>BEST</span><strong id="bestScore">000</strong></div>
+        </div>
+        <p id="gameOverReason" class="reason">WRONG NODE</p>
+        <button id="overlayRetryBtn" class="primary-btn">RETRY</button>
+        <button id="overlayTitleBtn" class="secondary-btn">RETURN TO TITLE</button>
+      </div>
+    </div>
+
+    <div id="unlockOverlay" class="overlay hidden">
+      <div class="unlock-card">
+        <p class="unlock-kicker">ACCESS GRANTED</p>
+        <h2>3-BACK</h2>
+        <p class="unlock-sub">HARD PROTOCOL UNLOCKED</p>
+        <button id="unlockContinueBtn" class="primary-btn">CONTINUE</button>
+      </div>
+    </div>
+
+
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
